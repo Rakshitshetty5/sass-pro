@@ -1,0 +1,62 @@
+@mixin header-icons($color){
+    font-size: 1rem;
+    color : $color;
+}
+
+@mixin d-flex-row($justifyContent : flex-start){
+    display: flex;
+    align-items: center;
+    justify-content: $justifyContent;
+}
+
+@mixin d-flex-col($alignItems,$justifyContent : flex-start){
+    display: flex;
+    flex-direction: column;
+    align-items: $alignItems;
+    justify-content: $justifyContent;
+}
+
+@mixin intro-para(){
+    margin-top: -10px;
+    color : map-get($fontColors,'service-card-text');
+}
+
+@mixin transparentButton(){
+    padding: 0.5rem 1rem;
+    background-color: transparent;
+    border: 2px solid $whiteColor;
+    color : $whiteColor;
+
+    &:hover{
+        background-color: $redColor;
+        border: 2px solid $redColor;
+    }
+}
+@mixin mob-ul{
+    margin-top: 1rem;
+    list-style-type: none;
+}
+@mixin mob-li{
+    margin-top: 1rem;
+    cursor: pointer;
+}
+@mixin redButton(){
+    height: 2rem;
+    background-color: $redColor;
+    color: white;
+    outline: none;
+    border: none;
+}
+
+@mixin dropdown($top,$left,$animation){
+    display: none;
+    position: absolute;
+    top: $top;
+    left: $left;
+    width: 10rem;
+    animation: $animation;
+    z-index: 1;
+    background-color: $whiteColor;
+    box-shadow: $dropdown-shadow
+
+}

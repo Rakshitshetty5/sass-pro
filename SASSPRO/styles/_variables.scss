@@ -1,0 +1,45 @@
+$headerHeight : 2.5rem;
+$navBarHeight : 4rem;
+$whiteColor : white;
+$padding: 13%;
+$dropdown-shadow : 0 0 5px rgba(214, 215, 216, 0.6);
+$shadow : 0px 2px 15px rgba(0, 0, 0, 0.1);
+$redColor : #CC1616;
+$lightGrey : #AAAAAAAA;
+$darkGrey : #444444;
+$bgColors : (
+    'header' : #191919,
+    'navbar' : $darkGrey,
+    'showcase' : linear-gradient(0deg, rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)),
+    'clients' : #f2f2f2,
+    'cta': linear-gradient(rgba(2, 2, 2, 0.5), rgba(0, 0, 0, 0.5)),
+    'footer': #0C0C0C,
+    'footer-details': #191919
+);
+$fontColors :(
+    'header' : #ffffff99,
+    'navbar' : white,
+    'showcaseContainer' : white,
+    'about' : $darkGrey,
+    'card-text' : $lightGrey,
+    'service-card-text' : $darkGrey,
+    'service-card-head' : #191919
+);
+$fontSizes : (
+    'navLink' :  14px,
+    'brand': 1.8rem,
+    'card-text' : 1rem,
+    'card-head' : 1.75rem,
+    'card-subhead' : 1.5rem,
+    'service-card-icon' : 1.75rem,
+    'service-card-text' : 14px,
+    'service-card-head': 1.5rem,
+    'footer-head' : 1rem,
+    'footer-link' : 14px
+);
+$breakpoints : (
+    'lg' : 1550px,
+    'md' : 1340px,
+    'sm': 1170px,
+    'xsm' : 990px
+)

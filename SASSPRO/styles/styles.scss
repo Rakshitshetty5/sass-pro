@@ -1,0 +1,1031 @@
+@import "./variables";
+@import "./mixin";
+@import './functions';
+
+*{
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+.header {
+    height: $headerHeight;
+    background-color: map-get($bgColors, 'header');
+    @include d-flex-row(space-between);
+    padding: 0 $padding;
+
+    @media screen and (max-width: map-get($breakpoints, 'lg')) {
+        padding: 0 calcPadding('lg')
+    }
+
+    @media screen and (max-width: map-get($breakpoints, 'md')) {
+        padding: 0 calcPadding('md');
+    }
+
+    &-contact{
+        @include d-flex-row();
+        @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        &__info{
+            @include d-flex-row();
+            span{
+                color: map-get($fontColors, 'header');
+                font-size: 1rem;
+                margin-left: 0.3rem
+            }
+            .fa-envelope, .fa-mobile{
+                @include header-icons($redColor);
+            }
+            &:first-child{
+                span{
+                    &:hover{
+                        color: white;
+                    }
+                }
+            }
+
+            &:not(:first-child){
+                margin-left: 1rem;
+            }
+        }
+    }
+
+    &-social{
+        .fa{
+            @include header-icons( map-get($fontColors, 'header'));
+
+            &:not(:first-child){
+                margin-left: 1rem;
+            }
+            &:hover{
+                color: white;
+            }
+        }
+        @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+            display: none;
+        }
+    }
+}
+
+.navbar {
+    height:$navBarHeight;
+    background-color: map-get($bgColors,'navbar');
+    color: map-get($fontColors, 'navbar');
+    padding: 0 $padding;
+    @include d-flex-row(space-between);
+
+    @media screen and (max-width: map-get($breakpoints, 'lg')) {
+        padding: 0 calcPadding('lg')
+    }
+    @media screen and (max-width: map-get($breakpoints, 'md')) {
+        padding: 0 calcPadding('md');
+    }
+
+    h1{
+        font-size: map-get($fontSizes, 'brand');
+    }
+
+    &-toggler{
+        display: none;
+        background-color: transparent;
+        outline: none;
+        border: none;
+        span{
+            height: 0.1rem;
+            width: 1.25rem;
+            background-color: white;
+            &:not(:first-child){
+                margin-top: 0.2rem;
+            }
+        }
+        @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+            display: flex;
+            @include d-flex-col($alignItems:center,$justifyContent:center)
+        }
+    }
+
+    &-items{
+        margin: 0px;
+        @include d-flex-row(space-evenly);
+        list-style-type: none;
+        @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+           display: none;
+        }
+    }
+    &-item{ 
+        height: $navBarHeight;
+        font-size: map-get($fontSizes, 'navLink');
+        @include d-flex-row();
+        padding: 0 0.9rem;
+        a{
+            text-decoration: none;
+            color: map-get($fontColors, 'navbar'); 
+        }
+        &:not(:first-child){
+            margin-left: 0.1rem;
+        }
+        &:hover{
+            background-color: $redColor;
+        }
+        &:nth-child(5){
+            position: relative;
+            .fa{
+                margin-left:0.3rem;
+                font-size: 0.8rem;
+                font-weight: 100;
+            }
+
+            .dropdown{
+                @include dropdown($top : 64px,$left : 0px,$animation: upwards 0.3s ease-in);
+                &-items{
+                    list-style-type: none;
+                    color: black;
+                    padding: 0px !important;
+                }
+                &-item{
+                    margin-left: 0px;
+                    padding: 0.6rem;
+                    display: flex;
+                    align-items: flex-start;
+
+                    &:hover{
+                        background-color: $redColor;
+                        color: map-get($fontColors, 'navbar');
+                    }
+
+                    &:nth-child(2){
+                        .deep-dropdown{
+                            @include dropdown($top : 35px,$left : 9.8rem,$animation: rightwards 0.3s ease-in);
+                            @media screen and (max-width: map-get($breakpoints, 'md')) {
+                                @include dropdown($top : 35px,$left : -9.9rem,$animation: rightwards 0.3s ease-in);
+
+                            }
+                            &__items{
+                                @extend .dropdown-items;
+                            }
+
+                            &__item{
+                                @extend .dropdown-item;
+                            }
+                        }
+                        &:hover{
+                            .deep-dropdown{
+                                display: block
+                            }
+                        }
+                    }
+                }
+            }
+
+            &:hover{
+                .dropdown{
+                    display: block
+                }
+            }
+        }
+    }
+    .active{
+        background-color: $redColor;
+    }
+
+}
+
+.showcase{
+    background: map-get($bgColors, 'showcase'), url('../img/hero-bg.jpg');
+    background-size: cover;
+    background-position: top;
+    background-attachment: fixed;
+    width: 100%;
+    height: calcShowcaseHeight();
+    position: relative;
+    &:before{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: black;
+    }
+    &-container{
+        position: absolute;
+        top: 30%;
+        left: 15%;
+        color : map-get($fontColors,'showcaseContainer');
+        animation:  upwards-showcase 0.8s ease-in;
+        @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+            top: 20%;
+            left: 0%;
+            width: 100%;
+            @include d-flex-col($alignItems:center,$justifyContent:center)
+        }
+        h1{
+            font-size: 2.5rem;
+            @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+                font-size: 2rem;
+                text-align: center;
+            }
+        }
+        p{
+            font-size: 1.3rem;
+            margin-top: -20px;
+            @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+                font-size: 1rem;
+                text-align: center;
+                margin-top: -15px;
+            }
+        }
+        button{
+            @include transparentButton()
+        }
+    }
+}
+
+.about{
+    @include d-flex-row($justifyContent: center);
+    align-items: flex-start;
+    padding: 3% $padding;
+    @media screen and (max-width: map-get($breakpoints, 'lg')) {
+        padding: 3% calcPadding('lg');
+    }
+    @media screen and (max-width: map-get($breakpoints, 'md')) {
+        padding: 3% calcPadding('md');
+    }
+    @media screen and (max-width: map-get($breakpoints, 'sm')) {
+        @include d-flex-col($alignItems:center, $justifyContent: center);
+    }
+    &-text{
+        color : map-get($fontColors,'about');
+        opacity: 0;
+        &__list{
+            list-style-type: none;
+            padding: 0px;
+            &-item{
+                @include d-flex-row();
+                align-items: flex-start;
+                margin-top: 1rem;
+                span{
+                    margin-left:1rem;
+                }
+                .circle-red{
+                    background-color: $whiteColor;
+                    border-radius: 50%;
+                    padding: 0.2rem;
+                    border: 1px solid $redColor;
+
+                    .fa{
+                        color: $redColor;
+                    }
+
+      
+                }
+                
+            }
+            @media screen and (max-width: map-get($breakpoints, 'sm')) {
+                order: 2;
+            }
+        }
+    }
+    &-img{
+        height: 25rem;
+        width: 35rem;
+        margin-left: 1rem;
+        opacity: 0;
+        @media screen and (max-width: map-get($breakpoints, 'lg')) {
+            height: 20rem;
+            width: 30rem;
+        }
+        @media screen and (max-width: map-get($breakpoints, 'sm')) {
+            order: -1;
+            height: 80%;
+            width: 100%;
+        }
+    } 
+    
+    .rightwards{
+        animation: rightwards 0.6s ease-in;
+        opacity: 1;
+    }
+    .leftwards{
+        animation : leftwards 0.6s ease-in;
+        opacity: 1;
+    }
+}
+
+.why-us{
+    opacity: 0;
+    @include d-flex-row(space-evenly);
+    padding: 2rem $padding;
+    @media screen and (max-width: map-get($breakpoints, 'lg')) {
+        padding: 2rem calcPadding('lg')
+    }
+    @media screen and (max-width: map-get($breakpoints, 'md')) {
+        padding: 2rem calcPadding('md');
+    }
+    @media screen and (max-width: map-get($breakpoints, 'sm')) {
+        @include d-flex-col($alignItems:center, $justifyContent: center);
+    }
+    .card{
+        padding: 1rem;
+        box-shadow: $shadow;
+        @media screen and (max-width: map-get($breakpoints, 'sm')) {
+            width: 100%;
+        }
+        h1{
+            color: $redColor;
+            font-size: map-get($fontSizes, 'card-head');
+        }
+
+        h2{
+            font-weight: 200;
+            font-size: map-get($fontSizes, 'card-subhead');
+            margin-top: -10px;
+        }
+
+        &:not(:first-child){
+            margin-left: 1rem;
+            @media screen and (max-width: map-get($breakpoints, 'sm')) {
+                margin-left: 0rem;
+                margin-top: 1rem;
+            }
+        }
+        p{
+            color : map-get($fontColors, 'card-text');
+            font-size: map-get($fontSizes, 'card-text');
+        }
+        &:hover{
+            background-color: $redColor;
+            h1,h2,p{
+                color : $whiteColor;
+                transform: translateY(-20px);
+                transition: all 0.3s ease-in-out;
+            }
+        }
+    }
+}
+.card-upwards{
+    opacity: 1;
+    animation: upwards 1s ease-in;
+}
+.clients{
+    opacity: 0;
+    padding: 2rem $padding;
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    background-color: map-get($bgColors, 'clients');
+    @media screen and (max-width: map-get($breakpoints, 'lg')) {
+        padding: 2rem calcPadding('lg')
+    }
+    @media screen and (max-width: map-get($breakpoints, 'md')) {
+        padding: 2rem calcPadding('md');
+    }
+    @media screen and (max-width: map-get($breakpoints, 'sm')) {
+        justify-items: center;
+        grid-template-columns: repeat(3,1fr);
+        grid-gap: 1rem;
+    }
+    @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+        justify-items: center;
+        grid-template-columns: repeat(2,1fr);
+        grid-gap: 1.5rem;
+    }
+    .client{
+        &-img{
+            height: 2rem;
+            filter: grayscale(100);
+            transition: all 0.4s ease-in;
+
+            &:hover{
+                filter: grayscale(0);
+                transform: scale(1.2);
+            }
+        }
+    }
+}
+.client-grow{
+    opacity: 1;
+    animation: grow 1s ease-in;
+}
+.services{
+    @include d-flex-col($alignItems:center, $justifyContent: center);
+    padding: 2rem $padding;
+    @media screen and (max-width: map-get($breakpoints, 'lg')) {
+        padding: 2rem calcPadding('lg')
+    }
+    @media screen and (max-width: map-get($breakpoints, 'md')) {
+        padding: 2rem calcPadding('md');
+    }
+    &-head{
+        @include d-flex-col($alignItems:center, $justifyContent:center);
+        span{
+            color: rgb(248, 245, 245);
+            font-size: 3rem;
+        }
+        h1{
+            margin-top: -30px;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+    }
+    p{
+       @include intro-para();
+       text-align: center;
+    }
+
+    &-cards{
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        grid-gap: 1rem;
+        @media screen and (max-width: map-get($breakpoints, 'sm')) {
+            justify-items: center;
+            grid-template-columns: repeat(2,1fr);
+            grid-gap: 1rem;
+        }
+        @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+            grid-template-columns: repeat(1,1fr);
+        }
+
+        .card{
+            @include d-flex-col($alignItems:center, $justifyContent:center);
+            text-align: center;
+            box-shadow: $shadow;
+            padding: 2rem 1rem;
+
+            &-icon{
+                @include d-flex-row($justifyContent: center);
+                height: 4rem;
+                width: 4rem;
+                position: relative;
+                background-color: $redColor;
+                color: $whiteColor;
+
+                
+                &::before{
+                    content: '';
+                    position: absolute;
+                    background-color: #fce5e5;
+                    transition: all .3s ease-out 0s;
+                    height: 4rem;
+                    width: 4rem;
+                    top: -8px;
+                    right: 6px;
+                    z-index: -10;
+                }
+                .fa{
+                    font-size: map-get($fontSizes, 'service-card-icon');
+                }
+            }
+
+            h1{
+                color: map-get($fontColors,'service-card-head');
+                font-size: map-get($fontSizes, 'service-card-head');
+            }
+
+            p{
+                margin-top: -10px;
+                color: map-get($fontColors,'service-card-text');
+                font-size: map-get($fontSizes, 'service-card-text');
+            }
+
+            &:hover{
+                background-color: $redColor;
+                .card-icon,h1,p{
+                    color : $whiteColor;
+                    transform: translateY(-10px);
+                    transition: all 0.3s ease-in-out;
+                }
+                .card-icon{
+                    background-color: $whiteColor;
+                    color: $redColor;
+
+                    &::before{
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.cta{
+    background-image: map-get($bgColors, 'cta'), url('../img/cta-bg.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    padding: halfPadding() $padding;
+    @include d-flex-col($alignItems:center, $justifyContent:center);
+    @media screen and (max-width: map-get($breakpoints, 'lg')) {
+        padding: halfPadding() calcPadding('lg')
+    }
+    @media screen and (max-width: map-get($breakpoints, 'md')) {
+        padding: halfPadding() calcPadding('md');
+    }
+    h1,p,button{
+        color: white;
+    }
+    h1{
+        font-size: 1.8rem;
+    }
+    p{
+        text-align: center;
+        margin-top: -10px;
+    }
+    button{
+        @include transparentButton()
+    }
+}
+
+.portfolio{
+    width: 100%;
+    padding: 2rem $padding;
+    text-align: center;
+    @include d-flex-col(center,$justifyContent:center);
+    
+    @media screen and (max-width: map-get($breakpoints, 'lg')) {
+        padding: 2rem calcPadding('lg')
+    }
+    @media screen and (max-width: map-get($breakpoints, 'md')) {
+        padding: 2rem calcPadding('md');
+    }
+    @extend .services-head;
+    p{
+        @include intro-para();
+    }
+
+    &-buttons{
+        margin-top: 1rem;
+        button{
+            background-color: transparent;
+            border: none;
+            outline: none;
+
+            &:not(:first-child){
+                margin-left: 1rem;
+            }
+        }
+        .active{
+            color: $redColor;
+        }
+    }
+
+    &-images{
+        margin-top: 2rem;
+        width: 100%;
+        display: grid;
+        .portfolio-image{
+            width: 32.5%;
+            position: relative;
+            @media screen and (max-width: map-get($breakpoints, 'sm')) {
+                width: 49%;
+            }
+            @media screen and (max-width: map-get($breakpoints, 'xsm')-200px) {
+                width: 98%;
+            }
+            img{
+                width: 99%;
+                max-height: 30rem;
+                @media screen and (max-width: map-get($breakpoints, 'xsm')-200px) {
+                    max-height: 25rem;
+                }
+            }
+            &__info{
+                display: none;
+                align-items: center;
+                justify-content: space-between;
+                position: absolute;
+                padding: 1rem;
+                width: 90%;
+                height: 4rem;
+                bottom: 30px;
+                left: 5%;
+                background-color: $whiteColor;
+                z-index: 1;
+
+                .info-name{
+                    @include d-flex-col($alignItems:flex-start,$justifyContent:center);
+                    h2{
+                        font-size: 1.2rem;
+                        font-weight: 500;
+                    }
+                    p{
+                        font-size: 0.8rem;
+                    }
+                }
+                .info-icons{
+                    .fa{
+                        margin-left: 0.5rem;
+                        color: $darkGrey;
+                        &:hover{
+                            color: $redColor;
+                        }
+                    }
+                }
+            }
+            &:hover{
+                .portfolio-image__info{
+                    display: flex;
+                }
+            }
+        }
+    }
+}
+
+.contact{
+    width: 100%;
+    padding: 2rem $padding;
+    @include d-flex-col(center,$justifyContent:center);
+    @extend .services-head;
+    @media screen and (max-width: map-get($breakpoints, 'lg')) {
+        padding: 2rem calcPadding('lg')
+    }
+    @media screen and (max-width: map-get($breakpoints, 'md')) {
+        padding: 2rem calcPadding('md');
+    }
+    &-head{
+        text-align: center;
+    }
+    p{
+        @include intro-para();
+        text-align: center;
+    }
+    &-info{
+        width: 100%;
+        @include d-flex-row($justifyContent:space-between);
+
+        @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+            @include d-flex-col($alignItems:center,$justifyContent:center);
+        }
+
+        &__detail{
+            @include d-flex-col($alignItems:center,$justifyContent:center);
+            width: 22%;
+            color: $darkGrey;
+            box-shadow: $shadow;
+            @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+                width: 100%;
+                margin-top: 1rem;
+            }
+            &:first-child{
+                width: 48%;
+                @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+                    width: 100%;
+                }
+            }
+            h1{
+                margin-top: 0.5rem;
+                font-size: 1.25rem;
+            }
+            p{  
+                font-size: 14px;
+            }
+            .fa{
+                border-radius: 50%;
+                border: 1px dotted $redColor;
+                color: $redColor;
+                padding: 0.5rem 0.8rem;
+                font-size: 1.5rem;
+                margin-top: 1rem;
+            }
+        }
+    }
+    &-us{
+        margin-top: 1.5rem;
+        width: 100%;
+        @include d-flex-row($justifyContent:space-between);
+        @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+            @include d-flex-col($alignItems:center,$justifyContent:center);
+        }
+        #googleMap{
+            box-shadow: 0 0 10px rgba(214, 215, 216, 0.6);
+            width: 48%;
+            height:320px;
+            @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+                width: 100%;
+            }
+        }
+        .contact-form{
+            box-shadow: 0 0 10px rgba(214, 215, 216, 0.6);
+            width: 48%;
+            padding: 2rem;
+            @include d-flex-col($alignItems:flex-start,$justifyContent:space-between);
+            @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+                width: 100%;
+                margin-top: 1rem;
+            }
+            .d-flex-row{
+                width: 100%;
+                @include d-flex-row($justifyContent:space-between);
+                input{
+                    width: 48%;
+                    padding: 5px;
+                }
+            }
+            input{
+                margin-top: 1rem;
+                width: 100%;
+                height: 2rem;
+                padding: 5px;
+            }
+            textarea{
+                margin-top: 1rem;
+                width: 100%;
+                padding: 5px;
+            }
+            button{
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 1rem;
+                padding: 1rem;
+                @include d-flex-row($justifyContent:center);
+                @include redButton();
+
+            }
+        }
+    }
+
+   
+}
+
+.footer{
+    @include d-flex-col($alignItems:center,$justifyContent:center);
+    background-color: map-get($bgColors,'footer');
+    color: $whiteColor;
+    padding: 1rem $padding;
+    @media screen and (max-width: map-get($breakpoints, 'lg')) {
+        padding: 1rem calcPadding('lg')
+    }
+    @media screen and (max-width: map-get($breakpoints, 'md')) {
+        padding: 1rem calcPadding('md');
+    }
+    &-nav{
+        @include d-flex-row($justifyContent:space-evenly);
+        align-items: flex-start;
+        border-bottom: 1px solid $lightGrey;
+        padding: 2rem 0;
+
+        @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+            @include d-flex-col($alignItems:flex-start, $justifyContent: center);
+        }
+
+        &__details{
+            @include d-flex-col($alignItems:center,$justifyContent:center);
+            border-top: 4px solid $redColor;
+            background-color: map-get($bgColors, 'footer-details');
+            padding: 0.5rem 5rem;
+            padding-bottom: 1.5rem;
+            .phone,.email{
+                @include d-flex-row($justifyContent: center);
+                h3{
+                    font-size: map-get($fontSizes, 'footer-link');
+                }
+                span{
+                    font-size: map-get($fontSizes, 'footer-link');
+                    margin-left: 0.2rem;
+                }
+            }
+            .phone{
+                margin-top: 20px;
+            }
+            .email{
+                margin-top: -30px;
+            }
+            .icons{
+                .fa{
+                    border-radius: 50%;
+                    background-color: #262626;
+                    padding: 0.5rem;
+                    font-size: 0.8rem;
+
+                    &:hover{
+                        background-color: $redColor;
+                    }
+                    &:not(:first-child){
+                        margin-left: 0.4rem;
+                    }
+                }
+            }
+        }
+        &__links{
+            padding-left: 3rem;
+            @media screen and (max-width: map-get($breakpoints, 'md')) {
+                padding-left: 1.5rem;
+            }
+            h1{
+                font-size: map-get($fontSizes,'footer-head');
+            }
+            ul{
+                list-style-type: none;
+                padding: 0px;
+
+                li{
+                    &:not(:first-child){
+                        margin-top: 1rem;
+                    }
+                    @include d-flex-row();
+                    .fa{
+                        font-size: 0.6rem;
+                        color: $redColor;
+                    }
+                    a{
+                        text-decoration: none;
+                        color: $whiteColor;
+                        font-size: map-get($fontSizes,'footer-link');
+                        margin-left: 0.5rem;
+                        transition: all .3s ease-in;
+                        &:hover{
+                            color: $redColor;
+                        }
+                    }
+                }
+            }
+        }
+        &__newsletter{
+            @include d-flex-col($alignItems:flex-start,$justifyContent: center);
+            margin-left: 2rem;
+            h1{
+                font-size: map-get($fontSizes,'footer-head');
+            }
+            p{
+                margin-top: -2px;
+                margin-bottom: 1.5rem;
+            }
+            .subscribe{
+                @include d-flex-row($justifyContent: center);
+                input{
+                    width: 16vw;
+                    height: 2rem;
+                    @media screen and (max-width: map-get($breakpoints, 'xsm')) {
+                        width: 100%;
+                    }
+                }
+                button{
+                    @include redButton();
+                  
+                }
+            }
+        }
+    }
+    &-copyright{
+        @include d-flex-col($alignItems:center,$justifyContent:center);
+        font-size: map-get($fontSizes,'footer-link');
+        span{
+            color: $redColor;
+            margin-top: -5px;
+        }
+    }
+}
+
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    background-color: map-get($bgColors, 'header');
+}
+
+.overlay{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    opacity: 0.9;
+    z-index: 80;
+}
+
+#deep-dropdown{
+    display: none;
+}
+
+#dropdown{
+    display: none;
+}
+
+.navbar-mobile{
+    height: 80vh;
+    width: 90%;
+    left: 5%;
+    background-color: white;
+    top: 60px;
+    z-index: 100;
+    position: fixed;
+    display: none;
+
+    button{
+        position: absolute;
+        top: -35px;
+        right: 0px;
+        background-color: transparent;
+        outline: none;
+        border: none;
+        font-size: 1.5rem;
+        color: $redColor;
+    }
+
+    &__items{
+        @include mob-ul();
+        @include d-flex-col($alignItems:flex-start,$justifyContent:center);
+        .navbar-mobile__item{
+            @include mob-li();
+            a{
+                color: black;
+                text-decoration: none;
+                &:hover{
+                    color: $redColor;
+                }
+            }
+            &:nth-child(5){
+                .dropdown-items{
+                    @include mob-ul();
+
+                    .dropdown-item{
+                        @include mob-li();
+
+                        &:nth-child(2){
+                            .deep-dropdown__items{
+                                @include mob-ul();
+
+                                .deep-dropdown__item{
+                                    @include mob-li();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+   
+}
+
+
+@keyframes upwards{
+    0%{
+        transform: translateY(20px);
+        opacity: 0;
+    }50%{
+        transform: translateY(10px);
+        opacity: 0.5;
+    }
+    100%{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes upwards-showcase{
+    0%{
+        transform: translateY(80px);
+        opacity: 0;
+    }50%{
+        transform: translateY(40px);
+        opacity: 0.5;
+    }
+    100%{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+
+@keyframes rightwards{
+    0%{
+        transform: translateX(-24px);
+        opacity: 0;
+    }50%{
+        transform: translateX(-12px);
+        opacity: 0.5;
+    }
+    100%{
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}
+@keyframes leftwards{
+    0%{
+        transform: translateX(24px);
+        opacity: 0;
+    }50%{
+        transform: translateX(12px);
+        opacity: 0.5;
+    }
+    100%{
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes grow{
+    0%{
+       transform: scale(0.5);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+

@@ -1,0 +1,16 @@
+@function calcShowcaseHeight(){
+    @return 100vh-5.4vh;
+}
+
+@function halfPadding(){
+    @return $padding/2;
+}
+
+@function calcPadding($size){
+    @if($size == 'lg'){
+        @return $padding - 1 ;
+    }
+    @if($size == 'md'){
+        @return $padding - 3;
+    }
+}
